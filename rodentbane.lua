@@ -347,7 +347,7 @@ function binddefault()
     -- Middle click with Control+space
     bind({"Control"}, "Space", function () 
         warp()
-        click(3)
+        click(2)
         stop()
     end)
 
