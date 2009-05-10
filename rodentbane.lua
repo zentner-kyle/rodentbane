@@ -256,9 +256,6 @@ function keyevent(modkeys, key, evtype)
     end
 
     -- No key was found, stop grabbing
-    print("STOP")
-    table.foreach(modkeys, print)
-    print("-"..key.."-")
     stop()
     return false
 end
