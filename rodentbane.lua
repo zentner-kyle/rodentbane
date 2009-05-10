@@ -1,6 +1,7 @@
 ----------------------------------------------------------------------------
 -- @author Lucas de Vries &lt;lucas@tuple-typed.org&gt;
 -- @copyright 5008-5009 Lucas de Vries
+-- Licensed under the WTFPL
 ----------------------------------------------------------------------------
 
 -- Load awful
