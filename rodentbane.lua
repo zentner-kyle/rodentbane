@@ -303,13 +303,21 @@ end
 
 --- Click with a button
 -- @param button Button number to click with, defaults to left (1)
-function click(button)
+function click(button, keyup)
     -- Default to left click
     local b = button or 1
 
     -- TODO: Figure out a way to use fake_input for clicks
     --capi.root.fake_input("button_press", button)
     --capi.root.fake_input("button_release", button)
+
+    if keyup then
+      keyup_command = "xdotool keyup "..keyup.." &> /dev/null"
+         .." || xte 'keyup "..keyup.."' &> /dev/null"
+         .." || echo 'W: rodentbane: either xdotool or xte"
+         .." is required to emulate mouse clicks, neither was found.'"
+      awful.util.spawn_with_shell(keyup_command)
+    end
     
     -- Use xdotool when available, otherwise try xte
     command = "xdotool click "..b.." &> /dev/null"
