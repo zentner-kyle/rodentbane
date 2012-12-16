@@ -312,20 +312,36 @@ function click(button, keyup)
     --capi.root.fake_input("button_release", button)
 
     if keyup then
-      keyup_command = "xdotool keyup "..keyup.." &> /dev/null"
-         .." || xte 'keyup "..keyup.."' &> /dev/null"
-         .." || echo 'W: rodentbane: either xdotool or xte"
-         .." is required to emulate mouse clicks, neither was found.'"
-      awful.util.spawn_with_shell(keyup_command)
+      key_up(keyup)
     end
     
     -- Use xdotool when available, otherwise try xte
-    command = "xdotool click "..b.." &> /dev/null"
+    command = "xdotool --clearmodifiers click "..b.." &> /dev/null"
       .." || xte 'mouseclick "..b.."' &> /dev/null"
       .." || echo 'W: rodentbane: either xdotool or xte"
       .." is required to emulate mouse clicks, neither was found.'"
 
     awful.util.spawn_with_shell(command)
+
+    if keyup then
+      key_down(keyup)
+    end
+end
+
+function key_up(keycode)
+    keyup_command = "xdotool keyup "..keycode.." &> /dev/null"
+     .." || xte 'keyup "..keycode.."' &> /dev/null"
+     .." || echo 'W: rodentbane: either xdotool or xte"
+     .." is required to emulate mouse clicks, neither was found.'"
+  awful.util.spawn_with_shell(keyup_command)
+end
+
+function key_down(keycode)
+    keydown_command = "xdotool keydown "..keycode.." &> /dev/null"
+     .." || xte 'keydown "..keycode.."' &> /dev/null"
+     .." || echo 'W: rodentbane: either xdotool or xte"
+     .." is required to emulate mouse clicks, neither was found.'"
+  awful.util.spawn_with_shell(keydown_command)
 end
 
 --- Undo a change to the area
