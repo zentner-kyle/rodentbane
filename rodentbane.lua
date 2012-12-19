@@ -310,22 +310,25 @@ function click(button, keyup)
     -- TODO: Figure out a way to use fake_input for clicks
     --capi.root.fake_input("button_press", button)
     --capi.root.fake_input("button_release", button)
+    local keyup_xdo = ""
+    local keyup_xte = ""
+    local keydown_xdo = ""
+    local keydown_xte = ""
 
     if keyup then
-      key_up(keyup)
+      keyup_xdo = "keyup "..keyup
+      keyup_xte = "'keyup "..keyup.."'"
+      keydown_xdo = "keydown "..keyup
+      keydown_xte = "'keydown "..keyup.."'"
     end
-    
+
     -- Use xdotool when available, otherwise try xte
-    command = "xdotool --clearmodifiers click "..b.." &> /dev/null"
-      .." || xte 'mouseclick "..b.."' &> /dev/null"
+    local command = "xdotool "..keyup_xdo.." click "..b.." "..keydown_xdo.." &> /dev/null"
+      .." || xte "..keyup_xte.." 'mouseclick "..b.."' "..keydown_xte.." &> /dev/null"
       .." || echo 'W: rodentbane: either xdotool or xte"
       .." is required to emulate mouse clicks, neither was found.'"
 
     awful.util.spawn_with_shell(command)
-
-    if keyup then
-      key_down(keyup)
-    end
 end
 
 function key_up(keycode)
